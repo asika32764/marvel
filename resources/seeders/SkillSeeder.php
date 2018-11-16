@@ -38,7 +38,7 @@ class SkillSeeder extends AbstractSeeder
             $created = $faker->dateTimeThisYear;
             $data    = new Data();
 
-            $data['title']       = ucwords(trim($faker->sentence(random_int(3, 5)), '.'));
+            $data['title']       = ucfirst($faker->word);
             $data['description'] = $faker->paragraph(5);
             $data['image']       = $faker->imageUrl();
             $data['state']       = $faker->randomElement([1, 1, 0]);

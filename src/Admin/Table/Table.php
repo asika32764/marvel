@@ -24,5 +24,7 @@ abstract class Table implements WarderTable, LunaTable
 
     const SKILLS = 'skills';
 
+    const HERO_SKILL_MAPS = 'hero_skill_maps';
+
     // @muse-placeholder  db-table  Do not remove this.
 }

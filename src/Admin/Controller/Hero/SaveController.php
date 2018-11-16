@@ -8,6 +8,7 @@
 
 namespace Admin\Controller\Hero;
 
+use Admin\DataMapper\HeroSkillMapMapper;
 use Admin\Repository\HeroRepository;
 use Phoenix\Controller\AbstractSaveController;
 use Windwalker\Data\DataInterface;
@@ -100,6 +101,18 @@ class SaveController extends AbstractSaveController
     protected function postSave(DataInterface $data)
     {
         parent::postSave($data);
+        
+        $skills = $data->skills;
+
+        HeroSkillMapMapper::delete(['hero_id' => $data->id]);
+
+        foreach ($skills as $k => $skillId) {
+            HeroSkillMapMapper::createOne([
+                'skill_id' => $skillId,
+                'hero_id' => $data->id,
+                'ordering' => $k + 1
+            ]);
+        }
     }
 
     /**

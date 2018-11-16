@@ -31,6 +31,7 @@ class CategorySeeder extends AbstractSeeder
      */
     protected $types = [
         'article',
+        'hero'
     ];
 
     /**

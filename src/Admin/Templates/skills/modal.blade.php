@@ -55,6 +55,10 @@
                 <table class="table table-bordered table-responsive">
                     <thead>
                     <tr>
+                        <th width="1%">
+                            Image
+                        </th>
+
                         {{-- TITLE --}}
                         <th class="text-nowrap">
                             {!! $grid->sortTitle('admin.skill.field.title', 'skill.title') !!}
@@ -83,10 +87,14 @@
                         $grid->setItem($item, $i);
                         ?>
                         <tr>
+                            <td>
+                                <img src="{{ $item->image }}" height="30" alt="img">
+                            </td>
+
                             {{-- CHECKBOX --}}
                             <td>
                                 <a href="#"
-                                    onclick="parent.{{ $function }}('{{ $selector }}', '{{ $item->id }}', '{{ $item->title }}');">
+                                    onclick="parent.{{ $function }}('{{ $selector }}', { image: '{{ $item->image }}', title: '{{ $item->title }}', value: '{{ $item->id }}' });">
                                     <span class="fa fa-angle-right text-muted"></span> {{ $item->title }}
                                 </a>
                             </td>

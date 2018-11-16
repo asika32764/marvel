@@ -36,6 +36,14 @@ class SkillInit extends AbstractMigration
 
             $schema->addIndex('created_by');
         });
+
+        $this->createTable(Table::HERO_SKILL_MAPS, function (Schema $schema) {
+            $schema->integer('hero_id');
+            $schema->integer('skill_id');
+            $schema->integer('ordering');
+
+            $schema->addPrimaryKey(['hero_id', 'skill_id']);
+        });
     }
 
     /**
@@ -44,5 +52,6 @@ class SkillInit extends AbstractMigration
     public function down()
     {
         $this->drop(Table::SKILLS);
+        $this->drop(Table::HERO_SKILL_MAPS);
     }
 }

@@ -10,6 +10,12 @@ namespace Admin\Form\Hero;
 
 use Admin\Field\Hero\HeroListField;
 use Admin\Field\Hero\HeroModalField;
+use Admin\Field\Skill\SkillListField;
+use Admin\Field\Skill\SkillModalField;
+use Lyrasoft\Luna\Admin\Field\Category\CategoryListField;
+use Lyrasoft\Luna\Admin\Field\Category\CategoryModalField;
+use Lyrasoft\Luna\Field\LunaFieldTrait;
+use Lyrasoft\Warder\Admin\Field\User\UserModalField;
 use Phoenix\Form\Filter\UtcFilter;
 use Phoenix\Form\PhoenixFieldTrait;
 use Windwalker\Core\Form\AbstractFieldDefinition;
@@ -25,6 +31,7 @@ use Windwalker\Validator\Rule;
 class EditDefinition extends AbstractFieldDefinition
 {
     use PhoenixFieldTrait;
+    use LunaFieldTrait;
 
     /**
      * Define the form fields.
@@ -55,6 +62,11 @@ class EditDefinition extends AbstractFieldDefinition
                 ->description(__('admin.hero.field.alias.desc'))
                 ->maxlength(255);
 
+            $this->categoryList('category_id')
+                ->label('Category')
+                ->categoryType('hero')
+                ->class('');
+
             // Image
             $this->text('image')
                 ->label(__('admin.hero.field.image'))
@@ -67,18 +79,17 @@ class EditDefinition extends AbstractFieldDefinition
                 ->addValidator(Rule\UrlValidator::class)
                 ->attr('data-validate', 'url');
 
-            // Example: Hero List
-            // TODO: Please remove this field in production
-            $this->add('hero_list', HeroListField::class)
-                ->label('List Example')
-                ->option('- Select Hero Example -', '')
-                ->addClass('has-select2');
-
-            // Example: Hero Modal
-            // TODO: Please remove this field in production
-            $this->add('hero_modal', HeroModalField::class)
-                ->label('Modal Example')
-                ->set('placeholder', 'Select Hero Example');
+            // Skills
+            $this->add(
+                'skills',
+                (new SkillModalField())
+                    ->listType(SkillModalField::TYPE_LIST)
+                    ->sortable(true)
+                    ->hasImage(true)
+            )
+                ->label('Skills')
+                ->multiple(true)
+                ->class('has-select2');
         });
 
         // Text Fieldset
@@ -118,11 +129,11 @@ class EditDefinition extends AbstractFieldDefinition
                 ->disabled();
 
             // Author
-            $this->text('created_by')
+            $this->userModal('created_by')
                 ->label(__('admin.hero.field.author'));
 
             // Modified User
-            $this->text('modified_by')
+            $this->userModal('modified_by')
                 ->label(__('admin.hero.field.modifiedby'))
                 ->disabled();
         });

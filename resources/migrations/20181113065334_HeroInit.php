@@ -24,6 +24,7 @@ class HeroInit extends AbstractMigration
     {
         $this->createTable(Table::HEROS, function (Schema $schema) {
             $schema->primary('id')->comment('Primary Key');
+            $schema->integer('category_id')->comment('Category ID');
             $schema->varchar('title')->comment('Title');
             $schema->varchar('alias')->comment('Alias');
             $schema->varchar('url')->comment('URL');
@@ -39,6 +40,7 @@ class HeroInit extends AbstractMigration
             $schema->char('language')->length(7)->comment('Language');
             $schema->text('params')->comment('Params');
 
+            $schema->addIndex('category_id');
             $schema->addIndex('alias(150)');
             $schema->addIndex('language');
             $schema->addIndex('created_by');

@@ -8,6 +8,7 @@
 
 namespace Admin\Repository;
 
+use Admin\DataMapper\HeroSkillMapMapper;
 use Admin\Record\HeroRecord;
 use Phoenix\Repository\AdminRepository;
 use Windwalker\Data\DataInterface;
@@ -104,7 +105,11 @@ class HeroRepository extends AdminRepository
      */
     protected function postGetItem(DataInterface $item)
     {
-        // Do some stuff
+        $item->skills = HeroSkillMapMapper::findColumn(
+            'skill_id',
+            ['hero_id' => $item->id],
+            'ordering ASC'
+        );
     }
 
     /**

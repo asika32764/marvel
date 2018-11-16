@@ -7,8 +7,11 @@
  */
 
 use Admin\DataMapper\HeroMapper;
+use Admin\DataMapper\SkillMapper;
 use Admin\Table\Table;
 use Faker\Factory;
+use Lyrasoft\Luna\Admin\DataMapper\CategoryMapper;
+use Lyrasoft\Warder\Admin\DataMapper\UserMapper;
 use Windwalker\Core\Seeder\AbstractSeeder;
 use Windwalker\Data\Data;
 use Windwalker\Filter\OutputFilter;
@@ -31,13 +34,16 @@ class HeroSeeder extends AbstractSeeder
     public function doExecute()
     {
         $faker = Factory::create('en_GB');
-        $userIds = range(20, 100);
+        $userIds = UserMapper::findColumn('id');
+        $skillIds = SkillMapper::findColumn('id');
+        $categoriesIds = CategoryMapper::findColumn('id', ['type' => 'hero']);
 
         foreach (range(1, 150) as $i) {
             $created = $faker->dateTimeThisYear;
             $data    = new Data();
 
-            $data['title']       = ucwords(trim($faker->sentence(random_int(3, 5)), '.'));
+            $data['category_id'] = $faker->randomElement($categoriesIds);
+            $data['title']       = $faker->name;
             $data['alias']       = OutputFilter::stringURLUnicodeSlug($data['title']);
             $data['url']         = $faker->url;
             $data['introtext']   = $faker->paragraph(5);
@@ -52,7 +58,15 @@ class HeroSeeder extends AbstractSeeder
             $data['language']    = 'en-GB';
             $data['params']      = '';
 
-            HeroMapper::createOne($data);
+            $hero = HeroMapper::createOne($data);
+
+            foreach ($faker->randomElements($skillIds, random_int(3, 5)) as $k => $skillId) {
+                \Admin\DataMapper\HeroSkillMapMapper::createOne([
+                    'skill_id' => $skillId,
+                    'hero_id' => $hero->id,
+                    'ordering' => $k + 1
+                ]);
+            }
 
             $this->outCounting();
         }
