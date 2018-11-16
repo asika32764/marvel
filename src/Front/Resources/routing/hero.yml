@@ -1,0 +1,17 @@
+# Hero
+hero:
+    pattern: /hero/(id)
+    controller: Hero
+    extra:
+        layout: hero
+        active:
+            mainmenu: heros
+
+# Heros
+heros:
+    pattern: /heros(/page)
+    controller: Heros
+    extra:
+        layout: heros
+        active:
+            mainmenu: heros

@@ -1,0 +1,21 @@
+# Hero
+hero:
+    pattern: /hero(/id)
+    controller: Hero
+    extra:
+        layout: hero
+        menu:
+            mainmenu: heros
+
+# Heros
+heros:
+    pattern: /heros(/page)
+    controller: Heros
+    action:
+        post: CopyController
+        patch: BatchController
+        put: FilterController
+    extra:
+        layout: heros
+        menu:
+            mainmenu: heros

@@ -1,0 +1,17 @@
+# Skill
+skill:
+    pattern: /skill(/id)
+    controller: Skill
+    extra:
+        layout: skill
+        active:
+            mainmenu: skills
+
+# Skills
+skills:
+    pattern: /skills(/page)
+    controller: Skills
+    extra:
+        layout: skills
+        active:
+            mainmenu: skills

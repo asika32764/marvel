@@ -1,0 +1,21 @@
+# Armor
+armor:
+    pattern: /armor(/id)
+    controller: Armor
+    extra:
+        layout: armor
+        menu:
+            mainmenu: armors
+
+# Armors
+armors:
+    pattern: /armors(/page)
+    controller: Armors
+    action:
+        post: CopyController
+        patch: BatchController
+        put: FilterController
+    extra:
+        layout: armors
+        menu:
+            mainmenu: armors

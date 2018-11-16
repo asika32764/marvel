@@ -1,0 +1,21 @@
+# Skill
+skill:
+    pattern: /skill(/id)
+    controller: Skill
+    extra:
+        layout: skill
+        menu:
+            mainmenu: skills
+
+# Skills
+skills:
+    pattern: /skills(/page)
+    controller: Skills
+    action:
+        post: CopyController
+        patch: BatchController
+        put: FilterController
+    extra:
+        layout: skills
+        menu:
+            mainmenu: skills
